@@ -36,7 +36,8 @@
 #define LINEWIDTH 5
 
 class Machine;
-class sensor;
+class opt_sensor;
+class tch_sensor;
 class Game;
 
 

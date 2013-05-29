@@ -43,18 +43,24 @@ void Machine::handle(int value){
 		go_straight_on();
 		break;
 	}
-
 }
 
 void Machine::move(Game *g){
+	//
+	oleft.x = x + height/3*cosf(theta+30*M_PI/180);
+	oleft.y = y + height/3*sinf(theta+30*M_PI/180);
+	oright.x = x + height/3*cosf(theta-30*M_PI/180);
+	oright.y = y + height/3*sinf(theta-30*M_PI/180);
+	//
+	tleft.x = x + height/2*cosf(theta+45*M_PI/180);
+	tleft.y = y + height/2*sinf(theta+45*M_PI/180);
+	tright.x = x + height/2*cosf(theta-45*M_PI/180);
+	tright.y = y + height/2*sinf(theta-45*M_PI/180);
 	if(sw){
-		h=( left.read(g) == COLOR )*10 + ( right.read(g) == COLOR);
+		h=( oleft.read(g) == COLOR )*10 + ( oright.read(g) == COLOR);
+		if( tright.read(g)*10 + tleft.read(g) )h=tleft.read(g)*10 + tright.read(g);
 		handle(h);
 	}
-	left.x = x + height/2*cosf(theta+30*M_PI/180);
-	left.y = y + height/2*sinf(theta+30*M_PI/180);
-	right.x = x + height/2*cosf(theta-30*M_PI/180);
-	right.y = y + height/2*sinf(theta-30*M_PI/180);
 }
 
 //(中心位置x,中心位置y,角度,サイズ)
@@ -79,13 +85,22 @@ void Machine::DrawTracer(class Machine *a)
 	glColor3f(0.5,0.5,0.5);
 	Drawsquare(a->x,a->y,a->theta,a->width/2);
 
-	//SENSOR_LEFT
+	//OPT_SENSOR_LEFT
 	glColor3f(BB);
-	Drawsquare(a->left.x,a->left.y,a->theta,5);
+	Drawsquare(a->oleft.x,a->oleft.y,a->theta,5);
 
-	//SENSOR_RIGHT
+	//OPT_SENSOR_RIGHT
 	glColor3f(BB);
-	Drawsquare(a->right.x,a->right.y,a->theta,5);
+	Drawsquare(a->oright.x,a->oright.y,a->theta,5);
+
+	//TCH_SENSOR_LEFT
+	glColor3f(GG);
+	Drawsquare(a->tleft.x,a->tleft.y,a->theta,5);
+
+	//TCH_SENSOR_RIGHT
+	glColor3f(GG);
+	Drawsquare(a->tright.x,a->tright.y,a->theta,5);
+
 
 	//LED_LEFT
 	zx = a->x + a->height/4*cosf(a->theta+30*M_PI/180);

@@ -9,14 +9,22 @@
 class Machine{
 public:
 	//内部クラスの定義
-	class sensor{
+	class opt_sensor{
 	public:
 		float x,y;
 		bool read(Game *g){return g->getDot((int)x,(int)y);}
 	};
+	class tch_sensor{
+	public:
+		float x,y;
+		//内側にある時は、0を返す。壁に当たったら1を返す。
+		bool read(Game *g){return !(( x>0 && x<WIDTH)&&( y>0 && y<HEIGHT));}
+	};
 	//内部クラスのインスタンス化
-	sensor left;
-	sensor right;
+	opt_sensor oleft;
+	opt_sensor oright;
+	tch_sensor tleft;
+	tch_sensor tright;
 
 	float x,y,theta;
 	bool sw;
