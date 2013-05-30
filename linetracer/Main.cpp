@@ -1,6 +1,7 @@
 #include "common.h"
 #include "Game.h"
 #include "Machine.h"
+#include "Runba.h"
 
 
 //
@@ -22,6 +23,12 @@ int main(void)
 	init();
 	OpenGL_init();
 	return 0;
+}
+
+
+int getRandum(int max,int min){
+	srand(time(NULL)); // Œ»İ‚ğ—”‚Ìí‚Ìİ’è
+	return min + rand()%(max - min); // MINˆÈãMAX–¢–‚Ì—”‚ğ¶¬
 }
 
 void OpenGL_init()
@@ -67,6 +74,16 @@ void timer(int dt)
 		m[i].move(&game);
 	}
 	for(int i=0;i<NUMOFRUNBA;i++){
+		for(int j=0;j<NUMOFRUNBA;j++){
+			if(i==j)continue;
+			if( (r[i].x-r[j].x)*(r[i].x-r[j].x)+(r[i].y-r[j].y)*(r[i].y-r[j].y)< 4*r[i].r*r[i].r){
+				r[i].setTurn(true);
+				r[i].setTime(getRandum(50,60));
+				//Õ“Ë‚É‚æ‚é”½“®B”Ú‹¯‹Z‚¶‚á‚È‚¢B
+				r[i].x -= cosf(r[i].theta);
+				r[i].y -= sinf(r[i].theta);
+			}
+		}
 		r[i].move(&game);
 	}
 	glutPostRedisplay();
@@ -87,9 +104,14 @@ void init()
 		m[i].theta=0*M_PI/180;
 	}
 	for(int i=0;i<NUMOFRUNBA;i++){
-		r[i].x=100*i+100;
-		r[i].y=200;
-		r[i].theta=0*M_PI/180;
+		r[i].x=WIDTH/2+WIDTH/2.3*cos(2*i*M_PI/NUMOFRUNBA);
+		r[i].y=HEIGHT/2+HEIGHT/2.3*sin(2*i*M_PI/NUMOFRUNBA);
+		r[i].theta=2*i*M_PI/NUMOFRUNBA;
+		r[i].tleft.x = r[i].x + r[i].height/2*cosf(r[i].theta+45*M_PI/180);
+		r[i].tleft.y = r[i].y + r[i].height/2*sinf(r[i].theta+45*M_PI/180);
+		r[i].tright.x = r[i].x + r[i].height/2*cosf(r[i].theta-45*M_PI/180);
+		r[i].tright.y = r[i].y + r[i].height/2*sinf(r[i].theta-45*M_PI/180);
+
 	}
 }
 

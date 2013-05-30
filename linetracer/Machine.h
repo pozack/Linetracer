@@ -1,6 +1,7 @@
 #include "common.h"
 #include "Game.h"
 
+#pragma once
 //extern Game game;
 
 //•Ç‚É“–‚½‚Á‚½‚ç¶‰E‚ÉØ‚è‘Ö‚¦‚éB
@@ -48,13 +49,3 @@ public:
 	Machine();
 };
 
-class Runba : public Machine
-{
-private:
-	float r;
-public:
-	void DrawTracer(Runba *a);
-	void DrawCircle(float x,float y,float r);
-	void move(Game *g);
-	Runba();
-};

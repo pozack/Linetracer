@@ -14,11 +14,13 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Machine.cpp" />
+    <ClCompile Include="Runba.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Machine.h" />
+    <ClInclude Include="Runba.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5B3DD11B-29CA-412A-894C-AE3C7DCF6EB2}</ProjectGuid>

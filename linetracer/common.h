@@ -4,10 +4,11 @@
 //                                                               //
 ///////////////////////////////////////////////////////////////////
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <cmath>
+#include <string>
 #ifdef __APPLE__
 	#include <GLUT/glut.h>
 #else 
@@ -25,8 +26,8 @@
 
 #define BLACK false
 #define WHITE true
-#define WIDTH  600
-#define HEIGHT 450
+#define WIDTH  1000
+#define HEIGHT 800
 
 #define BGCOLOR WHITE
 #define COLOR BLACK 
@@ -36,7 +37,7 @@
 #define LINEWIDTH 5
 
 #define NUMOFMACHINE 3
-#define NUMOFRUNBA 3
+#define NUMOFRUNBA 30
 class Machine;
 class opt_sensor;
 class tch_sensor;
@@ -45,3 +46,6 @@ class Game;
 
 //extern Game game;
 //extern Machine m[3];
+
+
+int getRandum(int max,int min);
