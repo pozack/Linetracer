@@ -47,10 +47,10 @@ void Machine::handle(int value){
 
 void Machine::move(Game *g){
 	//
-	oleft.x = x + height/3*cosf(theta+30*M_PI/180);
-	oleft.y = y + height/3*sinf(theta+30*M_PI/180);
-	oright.x = x + height/3*cosf(theta-30*M_PI/180);
-	oright.y = y + height/3*sinf(theta-30*M_PI/180);
+	oleft.x = x + height/2.3*cosf(theta+30*M_PI/180);
+	oleft.y = y + height/2.3*sinf(theta+30*M_PI/180);
+	oright.x = x + height/2.3*cosf(theta-30*M_PI/180);
+	oright.y = y + height/2.3*sinf(theta-30*M_PI/180);
 	//
 	tleft.x = x + height/2*cosf(theta+45*M_PI/180);
 	tleft.y = y + height/2*sinf(theta+45*M_PI/180);
@@ -58,7 +58,11 @@ void Machine::move(Game *g){
 	tright.y = y + height/2*sinf(theta-45*M_PI/180);
 	if(sw){
 		h=( oleft.read(g) == COLOR )*10 + ( oright.read(g) == COLOR);
-		if( tright.read(g)*10 + tleft.read(g) )h=tleft.read(g)*10 + tright.read(g);
+		//if machine got out from the field
+		if( tright.read(g) + tleft.read(g) ){
+			h = tleft.read(g) + tright.read(g)*10;
+
+		}
 		handle(h);
 	}
 }
@@ -72,6 +76,18 @@ void Machine::Drawsquare(int zx,int zy,float theta,int size){
 	glVertex2i(zx+size*cos(theta+225*M_PI/180),zy+size*sin(theta+225*M_PI/180) );
 	glEnd();
 }
+
+void Runba::DrawCircle(float x,float y,float r){
+	glBegin(GL_TRIANGLE_FAN);
+	//center
+#define PART 12 
+	glVertex2i(x,y);
+	for(float i=0;i<PART+1;i++){
+		glVertex2i(x+r*cos(2*i*M_PI/PART),y+r*sin(2*i*M_PI/PART) );
+	}
+	glEnd();
+}
+
 
 void Machine::DrawTracer(class Machine *a)
 {
@@ -137,4 +153,57 @@ Machine::Machine(){
 	y=900;
 	theta=0*M_PI/180;
 	sw=false;
+}
+
+
+
+
+void Runba::DrawTracer(Runba *a)
+{
+	//
+	if( COLOR == BLACK )glColor3f(BB);
+	else if( COLOR == WHITE )glColor3f(WW);
+	//float tmp,squar=45*M_PI/180;
+
+	//PLATE
+	glColor3f(0.9,0.9,0.9);
+	DrawCircle(a->x,a->y,a->r);
+
+	//TCH_SENSOR_LEFT
+	glColor3f(GG);
+	Drawsquare(a->tleft.x,a->tleft.y,a->theta,5);
+
+	//TCH_SENSOR_RIGHT
+	glColor3f(GG);
+	Drawsquare(a->tright.x,a->tright.y,a->theta,5);
+
+}
+
+Runba::Runba(){
+	r=30;
+	width=50;
+	height=50;
+	x=600;
+	y=900;
+	theta=0*M_PI/180;
+	sw=false;
+
+}
+
+
+void Runba::move(Game *g){
+	//
+	tleft.x = x + height/2*cosf(theta+45*M_PI/180);
+	tleft.y = y + height/2*sinf(theta+45*M_PI/180);
+	tright.x = x + height/2*cosf(theta-45*M_PI/180);
+	tright.y = y + height/2*sinf(theta-45*M_PI/180);
+	if(sw){
+		//h=( oleft.read(g) == COLOR )*10 + ( oright.read(g) == COLOR);
+		//if machine got out from the field
+		if( tright.read(g) + tleft.read(g) ){
+			h = tleft.read(g) + tright.read(g)*10;
+
+		}
+		handle(h);
+	}
 }

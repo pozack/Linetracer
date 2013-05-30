@@ -5,8 +5,10 @@
 
 //壁に当たったら左右に切り替える。
 //マシン同士の衝突処理
+//ルンバ
 //machine
-class Machine{
+class Machine
+{
 public:
 	//内部クラスの定義
 	class opt_sensor{
@@ -42,6 +44,17 @@ public:
 	void move(Game *g);
 	//(中心位置x,中心位置y,角度,サイズ)
 	void Drawsquare(int zx,int zy,float theta,int size);
-	void DrawTracer(class Machine *a);
+	virtual void DrawTracer(class Machine *a);
 	Machine();
+};
+
+class Runba : public Machine
+{
+private:
+	float r;
+public:
+	void DrawTracer(Runba *a);
+	void DrawCircle(float x,float y,float r);
+	void move(Game *g);
+	Runba();
 };

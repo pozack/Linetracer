@@ -14,7 +14,8 @@ void mouse(int x,int y);
 
 //global variable
 static Game game;
-static Machine m[3];
+static Machine m[NUMOFMACHINE];
+static Runba r[NUMOFRUNBA];
 
 int main(void)
 {
@@ -51,16 +52,22 @@ void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	game.DrawDots();
-	for(int i=0;i<1;i++){
+	for(int i=0;i<NUMOFMACHINE;i++){
 		m[i].DrawTracer(&m[i]);
+	}
+	for(int i=0;i<NUMOFRUNBA;i++){
+		r[i].DrawTracer(&r[i]);
 	}
 	glutSwapBuffers();
 }
 
 void timer(int dt)
 {
-	for(int i=0;i<1;i++){
+	for(int i=0;i<NUMOFMACHINE;i++){
 		m[i].move(&game);
+	}
+	for(int i=0;i<NUMOFRUNBA;i++){
+		r[i].move(&game);
 	}
 	glutPostRedisplay();
 	glutTimerFunc(dt,timer,10);
@@ -74,10 +81,15 @@ void init()
 			game.setDot(x,y,BGCOLOR);
 		}
 	}
-	for(int i=0;i<1;i++){
+	for(int i=0;i<NUMOFMACHINE;i++){
 		m[i].x=100*i+100;
 		m[i].y=100;
 		m[i].theta=0*M_PI/180;
+	}
+	for(int i=0;i<NUMOFRUNBA;i++){
+		r[i].x=100*i+100;
+		r[i].y=200;
+		r[i].theta=0*M_PI/180;
 	}
 }
 
@@ -98,8 +110,11 @@ void key(unsigned char k, int x, int y)
 		}
 		break;
 	case 13: /* ENTER */
-		for(int i=0;i<10;i++){
+		for(int i=0;i<NUMOFMACHINE;i++){
 			m[i].switching();
+		}
+		for(int i=0;i<NUMOFRUNBA;i++){
+			r[i].switching();
 		}
 		break;
 	case 8: /* bakspace */
