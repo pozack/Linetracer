@@ -24,6 +24,16 @@ void Runba::DrawCircle(float x,float y,float r){
 	glEnd();
 }
 
+void Runba::DrawFan(float x,float y,float r,float theta,float phi){
+	glBegin(GL_TRIANGLE_FAN);
+	//center
+#define FANS 24
+	glVertex2i(x,y);
+	for(int i=0;i<FANS;i++){
+		glVertex2i(x+r*cos(theta+phi/FANS*i*M_PI/180-phi*M_PI/180/2),y+r*sin(theta+phi/FANS*i*M_PI/180-phi*M_PI/180/2) );
+	}
+	glEnd();
+}
 
 
 
@@ -36,16 +46,20 @@ void Runba::DrawTracer(Runba *a)
 
 
 	//PLATE
-	glColor3f(0.9,0.9,0.9);
+	glColor3f(0.1,0.1,0.1);
 	DrawCircle(a->x,a->y,a->r);
-
-	//TCH_SENSOR_LEFT
-	glColor3f(GG);
-	Drawsquare(a->tleft.x,a->tleft.y,a->theta,5);
-
-	//TCH_SENSOR_RIGHT
-	glColor3f(GG);
-	Drawsquare(a->tright.x,a->tright.y,a->theta,5);
+	glColor3f(0.9,0.9,0.9);
+	DrawCircle(a->x,a->y,a->r*0.9);
+	
+	glColor3f(0.1,0.1,0.1);
+	DrawFan(a->x,a->y,a->r*0.75,a->theta,120);
+	glColor3f(0.9,0.9,0.9);
+	DrawFan(a->x,a->y,a->r*0.65,a->theta,120);
+	
+	glColor3f(0.1,0.1,0.1);
+	DrawCircle(a->x,a->y,a->r*0.5);
+	glColor3f(0.9,0.9,0.9);
+	DrawCircle(a->x,a->y,a->r*0.2);
 }
 
 
@@ -77,14 +91,26 @@ void Runba::move(Game *g){
 		tleft.y = y + height/2*sinf(theta+45*M_PI/180);
 		tright.x = x + height/2*cosf(theta-45*M_PI/180);
 		tright.y = y + height/2*sinf(theta-45*M_PI/180);
+		clean(g);
 		time--;
 	}
 }
 
 //Runba clean the line.
-void Runba::clean(Game *g, float x,float y,float r){
-	//計算量を減らすために、ルンバの横のみ調べる。
-
+void Runba::clean(Game *g){
+	//計算量を減らすために、ルンバの横のみ調べる。(GOAL)
+	float ay=-cos(theta);
+	float ax=sin(theta);
+	for(float i=-r/2;i<r/2;i+=3){
+		g->setDot(x+ax*i,y+ay*i,BGCOLOR);
+	}
+	/*
+	for(int dx=x-r;dx<x+r;dx++){
+		for(int dy=y-r;dy<y+r;dy++){
+			if((dx-x)*(dx-x)+(dy-y)*(dy-y)<r*r)g->setDot(dx,dy,BGCOLOR);
+		}
+	}
+	*/
 }
 
 

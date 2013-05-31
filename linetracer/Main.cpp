@@ -99,9 +99,13 @@ void init()
 		}
 	}
 	for(int i=0;i<NUMOFMACHINE;i++){
-		m[i].x=100*i+100;
-		m[i].y=100;
-		m[i].theta=0*M_PI/180;
+		m[i].x=WIDTH/2+WIDTH/3*cos(2*i*M_PI/NUMOFMACHINE);
+		m[i].y=HEIGHT/2+HEIGHT/3*sin(2*i*M_PI/NUMOFMACHINE);
+		m[i].theta=(360/NUMOFMACHINE*i+180)*M_PI/180;
+		m[i].tleft.x = m[i].x + m[i].height/2*cosf(m[i].theta+45*M_PI/180);
+		m[i].tleft.y = m[i].y + m[i].height/2*sinf(m[i].theta+45*M_PI/180);
+		m[i].tright.x = m[i].x + m[i].height/2*cosf(m[i].theta-45*M_PI/180);
+		m[i].tright.y = m[i].y + m[i].height/2*sinf(m[i].theta-45*M_PI/180);
 	}
 	for(int i=0;i<NUMOFRUNBA;i++){
 		r[i].x=WIDTH/2+WIDTH/2.3*cos(2*i*M_PI/NUMOFRUNBA);

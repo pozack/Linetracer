@@ -15,8 +15,9 @@ public:
 	void turn_right();
 	void DrawTracer(Runba *a);
 	void DrawCircle(float x,float y,float r);
+	void DrawFan(float x,float y,float r,float theta,float phi);
 	void move(Game *g);
-	void clean(Game *g, float x,float y,float r);
+	void clean(Game *g);
 	void handle(int value);
 	void setTurn(bool turn){this->turn=turn;}
 	void setTime(int time){this->time=time;}

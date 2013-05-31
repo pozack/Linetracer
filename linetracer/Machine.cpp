@@ -28,7 +28,8 @@ void Machine::handle(int value){
 	switch (value)
 	{
 	case 11:
-		stop();
+		//stop();
+		go_straight_on();
 		break;
 	case 10:
 		turn_left();
@@ -40,7 +41,7 @@ void Machine::handle(int value){
 		go_straight_on();
 		break;
 	default:
-		go_straight_on();
+		stop();
 		break;
 	}
 }
@@ -63,7 +64,11 @@ void Machine::move(Game *g){
 			h = tleft.read(g) + tright.read(g)*10;
 
 		}
+		if( (x<=0)||(x>=WIDTH)||(y<=0)||(y>=HEIGHT) ){
+			h=2;
+		}
 		handle(h);
+		g->setDot((int)x,(int)y,COLOR);
 	}
 }
 
