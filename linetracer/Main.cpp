@@ -60,7 +60,7 @@ void display(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	game.DrawDots();
 	for(int i=0;i<NUMOFMACHINE;i++){
-		m[i].DrawTracer(&m[i]);
+		//m[i].DrawTracer(&m[i]);
 	}
 	for(int i=0;i<NUMOFRUNBA;i++){
 		r[i].DrawTracer(&r[i]);
@@ -71,7 +71,7 @@ void display(void)
 void timer(int dt)
 {
 	for(int i=0;i<NUMOFMACHINE;i++){
-		m[i].move(&game);
+		//m[i].move(&game);
 	}
 	for(int i=0;i<NUMOFRUNBA;i++){
 		for(int j=0;j<NUMOFRUNBA;j++){

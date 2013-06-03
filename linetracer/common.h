@@ -26,8 +26,8 @@
 
 #define BLACK false
 #define WHITE true
-#define WIDTH  1200
-#define HEIGHT 800
+#define WIDTH  600
+#define HEIGHT 450
 
 #define BGCOLOR WHITE
 #define COLOR BLACK 
@@ -36,8 +36,8 @@
 
 #define LINEWIDTH 5
 
-#define NUMOFMACHINE 30
-#define NUMOFRUNBA 30
+#define NUMOFMACHINE 1
+#define NUMOFRUNBA 5
 class Machine;
 class opt_sensor;
 class tch_sensor;
