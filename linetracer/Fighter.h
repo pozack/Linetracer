@@ -63,6 +63,7 @@ public:
 			keystat=STAT_IDLE;
 			f=torque=0;
 		}
+		if((x-w.x)*(x-w.x)+(y-w.y)*(y-w.y)<2250)w.active=false;
 	}
 	void move(){
 		keycontrol();
@@ -75,13 +76,20 @@ public:
 		vy+=f*sinf(theta);
 		x+=vx;
 		y+=vy;
+		if( x<0 || x>WIDTH ){
+			vx=-vx*0.1;
+		}
+		if(  y<0 || y>HEIGHT ){
+			vy=-vy*0.1;
+		}
+
 		w.move();
 	}
 	void shoot(){
 		if(w.active==false){
 			w.active=true;
-			w.x=x;
-			w.y=y;
+			w.x=x+50*cos(theta);
+			w.y=y+50*sin(theta);
 			w.vx=10*cos(theta);
 			w.vy=10*sin(theta);
 		}
