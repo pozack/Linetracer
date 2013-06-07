@@ -87,10 +87,6 @@ void Runba::move(Game *g){
 		}else{
 			handle(0);//fowarding
 		}		
-		tleft.x = x + height/2*cosf(theta+45*M_PI/180);
-		tleft.y = y + height/2*sinf(theta+45*M_PI/180);
-		tright.x = x + height/2*cosf(theta-45*M_PI/180);
-		tright.y = y + height/2*sinf(theta-45*M_PI/180);
 		clean(g);
 		time--;
 	}

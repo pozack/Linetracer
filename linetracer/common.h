@@ -26,8 +26,8 @@
 
 #define BLACK false
 #define WHITE true
-#define WIDTH  600
-#define HEIGHT 450
+#define WIDTH  1000
+#define HEIGHT 800
 
 #define BGCOLOR WHITE
 #define COLOR BLACK 
@@ -36,8 +36,32 @@
 
 #define LINEWIDTH 5
 
+
+
+//キーの状態
+#define STAT_IDLE	0x001
+#define STAT_GO		0x002
+#define STAT_BACK	0x004
+#define STAT_LEFT	0x008
+#define STAT_RIGHT	0x010
+#define STAT_JUMP	0x020
+#define STAT_SHOT	0x040
+#define STAT_CVIEW	0x080
+#define STAT_CWEAP  0x100
+#define STAT_FLAG1	0x200	//視点切り替え
+#define STAT_FLAG2	0x400	//武器切り替え
+#define STAT_FLAG3	0x800	//ジャンプ用のフラグ
+
+
+#define KEY_SHOT 'z'
+#define KEY_CHANGE_WEAPON 'x'
+#define KEY_CHANGE_VIEWPOINT 'a'
+#define KEY_CHANGE_STAGE GLUT_KEY_F4
+#define KEY_RESET GLUT_KEY_F5
+
 #define NUMOFLINETRACER 3
 #define NUMOFRUNBA 3
+#define NUMOFFIGHTER 1
 class Machine;
 class opt_sensor;
 class tch_sensor;

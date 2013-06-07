@@ -3,7 +3,7 @@
 #include "Machine.h"
 #include "Runba.h"
 #include "Linetracer.h"
-
+#include "Fighter.h"
 
 //
 void OpenGL_init();
@@ -11,13 +11,18 @@ void OpenGL_init();
 void display(void);
 void timer(int dt);
 void init();
-void key(unsigned char k, int x, int y);
+
+void keydown(unsigned char key,int x,int y);
+void keyup(unsigned char key,int x,int y);
+void special_keydown(int key,int x,int y);
+void special_keyup(int key,int x,int y);
 void mouse(int x,int y);
 
 //global variable
 static Game game;
 static Linetracer m[NUMOFLINETRACER];
 static Runba r[NUMOFRUNBA];
+static Fighter f;
 
 int main(void)
 {
@@ -49,7 +54,11 @@ void OpenGL_init()
 	glutSetCursor(GLUT_CURSOR_HELP);
 
 	glutDisplayFunc(display);
-	glutKeyboardFunc(key);
+	glutKeyboardFunc(keydown);//押したとき
+	glutKeyboardUpFunc(keyup);//離れたとき
+	glutSpecialFunc(special_keydown);
+	glutSpecialUpFunc(special_keyup);
+
 	glutMotionFunc(mouse);//ドラッグでラインを引く
 	glutSetCursor(GLUT_CURSOR_RIGHT_ARROW);
 	glutTimerFunc(0,timer,10);
@@ -66,6 +75,7 @@ void display(void)
 	for(int i=0;i<NUMOFRUNBA;i++){
 		r[i].DrawTracer(&r[i]);
 	}
+	f.DrawFighter();
 	glutSwapBuffers();
 }
 
@@ -87,6 +97,7 @@ void timer(int dt)
 		}
 		r[i].move(&game);
 	}
+	f.move();
 	glutPostRedisplay();
 	glutTimerFunc(dt,timer,10);
 }
@@ -112,52 +123,160 @@ void init()
 		r[i].x=WIDTH/2+WIDTH/2.3*cos(2*i*M_PI/NUMOFRUNBA);
 		r[i].y=HEIGHT/2+HEIGHT/2.3*sin(2*i*M_PI/NUMOFRUNBA);
 		r[i].theta=2*i*M_PI/NUMOFRUNBA;
-		r[i].tleft.x = r[i].x + r[i].height/2*cosf(r[i].theta+45*M_PI/180);
-		r[i].tleft.y = r[i].y + r[i].height/2*sinf(r[i].theta+45*M_PI/180);
-		r[i].tright.x = r[i].x + r[i].height/2*cosf(r[i].theta-45*M_PI/180);
-		r[i].tright.y = r[i].y + r[i].height/2*sinf(r[i].theta-45*M_PI/180);
-
 	}
-}
 
-
-void key(unsigned char k, int x, int y)
-{
-	switch (k) {
-	case 27:  /* Escape */
-		exit(0);
-		break;
-	case 127: /* delete */
-		if(game.getPen() == BGCOLOR ){
-			glutSetCursor(GLUT_CURSOR_DESTROY);
-			game.setPen(COLOR);
-		}else{
-			glutSetCursor(GLUT_CURSOR_RIGHT_ARROW);
-			game.setPen(BGCOLOR);
-		}
-		break;
-	case 13: /* ENTER */
-		for(int i=0;i<NUMOFLINETRACER;i++){
-			m[i].switching();
-		}
-		for(int i=0;i<NUMOFRUNBA;i++){
-			r[i].switching();
-		}
-		break;
-	case 8: /* bakspace */
-		init();
-		break;
-	case 'i': /* increase machine */
-		//init();
-		break;
-	default:
-		break;
-	}
-	glutPostRedisplay();
 }
 
 
 void mouse(int x,int y)
 {
 	game.setDot(x,y,game.getPen());
+}
+
+
+void keydown(unsigned char key,int x,int y){	
+	switch (key) {
+		case '8':	
+			f.keystat|=STAT_GO;
+			break;
+		case '5':	
+			f.keystat|=STAT_BACK;
+			break;
+		case '4':
+			f.keystat|=STAT_LEFT;
+			break;
+		case '6':	
+			f.keystat|=STAT_RIGHT;
+			break;
+            /*
+		case 'y':	//ジャンプ
+			f.keystat|=STAT_JUMP;
+			break;
+             */
+		case KEY_SHOT:	//ショット
+			f.keystat|=STAT_SHOT;
+			break;
+		case KEY_CHANGE_VIEWPOINT:	//視点切り替え
+			f.keystat |= STAT_CVIEW;
+			break;
+		case KEY_CHANGE_WEAPON:	//視点切り替え
+			f.keystat |= STAT_CWEAP;
+			break;
+		case 27:
+			exit(0);
+			break;
+		case 127: /* delete */
+			if(game.getPen() == BGCOLOR ){
+				glutSetCursor(GLUT_CURSOR_DESTROY);
+				game.setPen(COLOR);
+			}else{
+				glutSetCursor(GLUT_CURSOR_RIGHT_ARROW);
+				game.setPen(BGCOLOR);
+			}
+			break;
+		case 13: /* ENTER */
+			for(int i=0;i<NUMOFLINETRACER;i++){
+				m[i].switching();
+			}
+			for(int i=0;i<NUMOFRUNBA;i++){
+				r[i].switching();
+			}
+			break;
+		case 8: /* bakspace */
+			init();
+			break;
+		case 'i': /* increase machine */
+			//init();
+			break;
+		default:
+			break;
+	}
+	glutPostRedisplay();
+}
+
+void keyup(unsigned char key,int x,int y){	
+	switch (key){
+		case '8':	
+			f.keystat &= ~STAT_GO;
+			break;
+		case '5':	
+			f.keystat &= ~STAT_BACK;
+			break;
+		case '4':
+			f.keystat &= ~STAT_LEFT;
+			break;
+		case '6':	
+			f.keystat &= ~STAT_RIGHT;
+			break;
+            /*
+		case 'y':	//ジャンプ
+			f.keystat &= ~STAT_JUMP;
+			break;
+             */
+		case KEY_SHOT:	//ショット
+			f.keystat &= ~STAT_SHOT;
+			break;
+		case KEY_CHANGE_VIEWPOINT:	//視点切り替え
+			f.keystat &= ~STAT_CVIEW;
+			f.keystat &= ~STAT_FLAG1;	//フラグリセット
+			break;
+		case KEY_CHANGE_WEAPON:	//武器切り替え
+			f.keystat &= ~STAT_CWEAP;
+			f.keystat &= ~STAT_FLAG2;	//フラグリセット
+			break;
+		default:
+			break;
+	}
+	glutPostRedisplay();
+}
+
+
+void special_keydown(int key,int x,int y){
+	switch (key) {
+		case GLUT_KEY_UP:	//前進
+			f.keystat|=STAT_GO;
+			break;
+		case GLUT_KEY_DOWN:	//後進
+			f.keystat|=STAT_BACK;
+			break;
+		case GLUT_KEY_LEFT:	//左旋回
+			f.keystat|=STAT_LEFT;
+			break;
+		case GLUT_KEY_RIGHT:	//右旋回
+			f.keystat|=STAT_RIGHT;
+			break;
+		case KEY_RESET:
+			//f.time=0;
+			//model_init(s);
+			break;
+		case KEY_CHANGE_STAGE:
+			//f.time=0;
+            //property.stagetype++;
+            //if(property.stagetype==MAX_STAGE)property.stagetype=0;
+			//model_init(s);
+			break;
+		default:
+			break;
+	}
+	glutPostRedisplay();
+}
+
+void special_keyup(int key,int x,int y){
+	switch (key){
+		case GLUT_KEY_UP:	//前進
+			f.keystat &= ~STAT_GO;
+			break;
+		case GLUT_KEY_DOWN:	//後進
+			f.keystat &= ~STAT_BACK;
+			break;
+		case GLUT_KEY_LEFT:	//左旋回
+			f.keystat &= ~STAT_LEFT;
+			break;
+		case GLUT_KEY_RIGHT:	//右旋回
+			f.keystat &= ~STAT_RIGHT;
+			break;
+		default:
+			break;
+	}
+	glutPostRedisplay();
 }
