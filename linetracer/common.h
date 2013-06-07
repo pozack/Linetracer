@@ -36,8 +36,8 @@
 
 #define LINEWIDTH 5
 
-#define NUMOFMACHINE 1
-#define NUMOFRUNBA 5
+#define NUMOFLINETRACER 3
+#define NUMOFRUNBA 3
 class Machine;
 class opt_sensor;
 class tch_sensor;

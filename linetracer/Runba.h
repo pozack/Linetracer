@@ -10,6 +10,15 @@ private:
 	unsigned int time;
 	bool turn,d;
 public:
+		class tch_sensor{
+	public:
+		float x,y;
+		//内側にある時は、0を返す。壁に当たったら1を返す。
+		bool read(Game *g){return !(( x>0 && x<WIDTH)&&( y>0 && y<HEIGHT));}
+	};
+	//内部クラスのインスタンス化
+	tch_sensor tleft;
+	tch_sensor tright;
 	float r;
 	void turn_left();
 	void turn_right();

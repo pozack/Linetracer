@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Machine.h"
 #include "Runba.h"
+#include "Linetracer.h"
 
 
 //
@@ -15,7 +16,7 @@ void mouse(int x,int y);
 
 //global variable
 static Game game;
-static Machine m[NUMOFMACHINE];
+static Linetracer m[NUMOFLINETRACER];
 static Runba r[NUMOFRUNBA];
 
 int main(void)
@@ -59,8 +60,8 @@ void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	game.DrawDots();
-	for(int i=0;i<NUMOFMACHINE;i++){
-		//m[i].DrawTracer(&m[i]);
+	for(int i=0;i<NUMOFLINETRACER;i++){
+		m[i].DrawTracer(&m[i]);
 	}
 	for(int i=0;i<NUMOFRUNBA;i++){
 		r[i].DrawTracer(&r[i]);
@@ -70,8 +71,8 @@ void display(void)
 
 void timer(int dt)
 {
-	for(int i=0;i<NUMOFMACHINE;i++){
-		//m[i].move(&game);
+	for(int i=0;i<NUMOFLINETRACER;i++){
+		m[i].move(&game);
 	}
 	for(int i=0;i<NUMOFRUNBA;i++){
 		for(int j=0;j<NUMOFRUNBA;j++){
@@ -98,10 +99,10 @@ void init()
 			game.setDot(x,y,BGCOLOR);
 		}
 	}
-	for(int i=0;i<NUMOFMACHINE;i++){
-		m[i].x=WIDTH/2+WIDTH/3*cos(2*i*M_PI/NUMOFMACHINE);
-		m[i].y=HEIGHT/2+HEIGHT/3*sin(2*i*M_PI/NUMOFMACHINE);
-		m[i].theta=(360/NUMOFMACHINE*i+180)*M_PI/180;
+	for(int i=0;i<NUMOFLINETRACER;i++){
+		m[i].x=WIDTH/2+WIDTH/3*cos(2*i*M_PI/NUMOFLINETRACER);
+		m[i].y=HEIGHT/2+HEIGHT/3*sin(2*i*M_PI/NUMOFLINETRACER);
+		m[i].theta=(360/NUMOFLINETRACER*i+180)*M_PI/180;
 		m[i].tleft.x = m[i].x + m[i].height/2*cosf(m[i].theta+45*M_PI/180);
 		m[i].tleft.y = m[i].y + m[i].height/2*sinf(m[i].theta+45*M_PI/180);
 		m[i].tright.x = m[i].x + m[i].height/2*cosf(m[i].theta-45*M_PI/180);
@@ -136,7 +137,7 @@ void key(unsigned char k, int x, int y)
 		}
 		break;
 	case 13: /* ENTER */
-		for(int i=0;i<NUMOFMACHINE;i++){
+		for(int i=0;i<NUMOFLINETRACER;i++){
 			m[i].switching();
 		}
 		for(int i=0;i<NUMOFRUNBA;i++){
