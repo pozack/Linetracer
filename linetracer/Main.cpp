@@ -20,9 +20,10 @@ void mouse(int x,int y);
 
 //global variable
 static Game game;
-static Linetracer m[NUMOFLINETRACER];
-static Runba r[NUMOFRUNBA];
 static Fighter f;
+list<Linetracer> linetracerlist;
+list<Runba> runbalist;
+
 
 int main(void)
 {
@@ -32,7 +33,7 @@ int main(void)
 }
 
 
-int getRandum(int max,int min){
+int getRandom(int max,int min){
 	srand(time(NULL)); // Œ»İ‚ğ—”‚Ìí‚Ìİ’è
 	return min + rand()%(max - min); // MINˆÈãMAX–¢–‚Ì—”‚ğ¶¬
 }
@@ -69,11 +70,11 @@ void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	game.DrawDots();
-	for(int i=0;i<NUMOFLINETRACER;i++){
-		m[i].DrawTracer(&m[i]);
+	for( list<Linetracer>::iterator it = linetracerlist.begin(); it!=linetracerlist.end(); it++){
+		it->DrawTracer();
 	}
-	for(int i=0;i<NUMOFRUNBA;i++){
-		r[i].DrawTracer(&r[i]);
+	for( list<Runba>::iterator it = runbalist.begin(); it!=runbalist.end(); it++){
+		it->DrawRunba();
 	}
 	f.DrawFighter();
 	glutSwapBuffers();
@@ -81,21 +82,23 @@ void display(void)
 
 void timer(int dt)
 {
-	for(int i=0;i<NUMOFLINETRACER;i++){
-		m[i].move(&game);
+	for( list<Linetracer>::iterator it = linetracerlist.begin(); it!=linetracerlist.end(); it++){
+		it->move(&game);
 	}
-	for(int i=0;i<NUMOFRUNBA;i++){
-		for(int j=0;j<NUMOFRUNBA;j++){
-			if(i==j)continue;
-			if( (r[i].x-r[j].x)*(r[i].x-r[j].x)+(r[i].y-r[j].y)*(r[i].y-r[j].y)< 4*r[i].r*r[i].r){
-				r[i].setTurn(true);
-				r[i].setTime(getRandum(50,60));
+
+	list<Runba>::iterator it,jt;
+	for( it = runbalist.begin(); it!=runbalist.end(); it++){
+		for(  jt = runbalist.begin(); jt!=runbalist.end(); jt++){
+			if(it==jt)continue;
+			if( (it->x-jt->x)*(it->x-jt->x)+(it->y-jt->y)*(it->y-jt->y)< 4*it->r*it->r){
+				it->setTurn(true);
+				it->setTime(getRandom(50,60));
 				//Õ“Ë‚É‚æ‚é”½“®B”Ú‹¯‹Z‚¶‚á‚È‚¢B
-				r[i].x -= cosf(r[i].theta);
-				r[i].y -= sinf(r[i].theta);
+				it->x -= cosf(it->theta);
+				it->y -= sinf(it->theta);
 			}
 		}
-		r[i].move(&game);
+		it->move(&game);
 	}
 	f.move();
 	glutPostRedisplay();
@@ -105,26 +108,33 @@ void timer(int dt)
 
 void init()
 {
+	int i=0;
 	for(int x=0;x<WIDTH;x++){
 		for(int y=0;y<HEIGHT;y++){
 			game.setDot(x,y,BGCOLOR);
 		}
 	}
-	for(int i=0;i<NUMOFLINETRACER;i++){
-		m[i].x=WIDTH/2+WIDTH/3*cos(2*i*M_PI/NUMOFLINETRACER);
-		m[i].y=HEIGHT/2+HEIGHT/3*sin(2*i*M_PI/NUMOFLINETRACER);
-		m[i].theta=(360/NUMOFLINETRACER*i+180)*M_PI/180;
-		m[i].tleft.x = m[i].x + m[i].height/2*cosf(m[i].theta+45*M_PI/180);
-		m[i].tleft.y = m[i].y + m[i].height/2*sinf(m[i].theta+45*M_PI/180);
-		m[i].tright.x = m[i].x + m[i].height/2*cosf(m[i].theta-45*M_PI/180);
-		m[i].tright.y = m[i].y + m[i].height/2*sinf(m[i].theta-45*M_PI/180);
+	i=0;
+	linetracerlist.insert(linetracerlist.end(),Linetracer(100,100,30));
+	for( list<Linetracer>::iterator it = linetracerlist.begin(); i<NUMOFLINETRACER; i++,it++){
+		it->x=WIDTH/2+WIDTH/3*cos(2*i*M_PI/NUMOFLINETRACER);
+		it->y=HEIGHT/2+HEIGHT/3*sin(2*i*M_PI/NUMOFLINETRACER);
+		it->theta=(360/NUMOFLINETRACER*i+180)*M_PI/180;
+		it->tleft.x = it->x + it->height/2*cosf(it->theta+45*M_PI/180);
+		it->tleft.y = it->y + it->height/2*sinf(it->theta+45*M_PI/180);
+		it->tright.x = it->x + it->height/2*cosf(it->theta-45*M_PI/180);
+		it->tright.y = it->y + it->height/2*sinf(it->theta-45*M_PI/180);
+		linetracerlist.insert(linetracerlist.end(),*it);
 	}
-	for(int i=0;i<NUMOFRUNBA;i++){
-		r[i].x=WIDTH/2+WIDTH/2.3*cos(2*i*M_PI/NUMOFRUNBA);
-		r[i].y=HEIGHT/2+HEIGHT/2.3*sin(2*i*M_PI/NUMOFRUNBA);
-		r[i].theta=2*i*M_PI/NUMOFRUNBA;
+	runbalist.insert(runbalist.end(),Runba(100,100,30));
+	i=0;
+	for(list<Runba>::iterator it = runbalist.begin(); i<NUMOFRUNBA ; it++){
+		it->x=WIDTH/2+WIDTH/2.3*cos(2*i*M_PI/NUMOFRUNBA);
+		it->y=HEIGHT/2+HEIGHT/2.3*sin(2*i*M_PI/NUMOFRUNBA);
+		it->theta=2*i*M_PI/NUMOFRUNBA;
+		runbalist.insert(runbalist.end(),*it);
+		i++;
 	}
-
 }
 
 
@@ -175,11 +185,11 @@ void keydown(unsigned char key,int x,int y){
 			}
 			break;
 		case 13: /* ENTER */
-			for(int i=0;i<NUMOFLINETRACER;i++){
-				m[i].switching();
+			for( list<Linetracer>::iterator it = linetracerlist.begin(); it!=linetracerlist.end(); it++){
+				it->switching();
 			}
-			for(int i=0;i<NUMOFRUNBA;i++){
-				r[i].switching();
+			for( list<Runba>::iterator it = runbalist.begin(); it!=runbalist.end(); it++){
+				it->switching();
 			}
 			break;
 		case 8: /* bakspace */

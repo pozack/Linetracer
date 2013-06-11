@@ -39,6 +39,6 @@ public:
 	void move(Game *g);
 	//(中心位置x,中心位置y,角度,サイズ)
 	void Drawsquare(int zx,int zy,float theta,int size);
-	virtual void DrawTracer(class Linetracer *a);
-	Linetracer();
+	virtual void DrawTracer();
+	Linetracer(float x,float y,float theta);
 };

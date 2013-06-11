@@ -1,15 +1,15 @@
 #include "common.h"
 #include "Runba.h"
-Runba::Runba(){
+Runba::Runba(float x,float y,float theta){
 	time=300;
 	turn=false;
 	d=false;
 	r=30;
 	width=50;
 	height=50;
-	x=600;
-	y=900;
-	theta=0*M_PI/180;
+	this->x=x;
+	this->y=y;
+	this->theta=theta*M_PI/180;
 	sw=false;
 }
 
@@ -37,7 +37,7 @@ void Runba::DrawFan(float x,float y,float r,float theta,float phi){
 
 
 
-void Runba::DrawTracer(Runba *a)
+void Runba::DrawRunba()
 {
 	//
 	if( COLOR == BLACK )glColor3f(BB);
@@ -47,19 +47,19 @@ void Runba::DrawTracer(Runba *a)
 
 	//PLATE
 	glColor3f(0.1,0.1,0.1);
-	DrawCircle(a->x,a->y,a->r);
+	DrawCircle(x,y,r);
 	glColor3f(0.9,0.9,0.9);
-	DrawCircle(a->x,a->y,a->r*0.9);
+	DrawCircle(x,y,r*0.9);
 	
 	glColor3f(0.1,0.1,0.1);
-	DrawFan(a->x,a->y,a->r*0.75,a->theta,120);
+	DrawFan(x,y,r*0.75,theta,120);
 	glColor3f(0.9,0.9,0.9);
-	DrawFan(a->x,a->y,a->r*0.65,a->theta,120);
+	DrawFan(x,y,r*0.65,theta,120);
 	
 	glColor3f(0.1,0.1,0.1);
-	DrawCircle(a->x,a->y,a->r*0.5);
+	DrawCircle(x,y,r*0.5);
 	glColor3f(0.9,0.9,0.9);
-	DrawCircle(a->x,a->y,a->r*0.2);
+	DrawCircle(x,y,r*0.2);
 }
 
 
@@ -69,13 +69,13 @@ void Runba::move(Game *g){
 		//
 		if(time<=0){
 			turn=!turn;
-			if(turn)time=getRandum(1,100);
-			else time=getRandum(100,300);
+			if(turn)time=getRandom(1,100);
+			else time=getRandom(100,300);
 			d=(time%2==0);
 		}
 		if( (x<r)||(x>WIDTH-r)||(y<r)||(y>HEIGHT-r) ){
 			turn=true;
-			time=getRandum(50,60);
+			time=getRandom(50,60);
 			d=(time%2==0);
 			//Õ“Ë‚É‚æ‚é”½“®B”Ú‹¯‹Z‚¶‚á‚È‚¢B
 			x -= cosf(theta);

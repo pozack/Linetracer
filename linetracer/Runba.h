@@ -13,7 +13,7 @@ public:
 	float r;
 	void turn_left();
 	void turn_right();
-	void DrawTracer(Runba *a);
+	void DrawRunba();
 	void DrawCircle(float x,float y,float r);
 	void DrawFan(float x,float y,float r,float theta,float phi);
 	void move(Game *g);
@@ -21,5 +21,5 @@ public:
 	void handle(int value);
 	void setTurn(bool turn){this->turn=turn;}
 	void setTime(int time){this->time=time;}
-	Runba();
+	Runba(float x,float y,float theta);
 };

@@ -8,6 +8,8 @@
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
+#include <list>
+#include <functional>
 #include <string>
 #ifdef __APPLE__
 	#include <GLUT/glut.h>
@@ -16,6 +18,7 @@
 	#include <GL/glut.h>
 #endif
 
+using namespace std;
 #define GLUT_CURSOR_RIGHT_ARROW 0
 #define M_PI 3.14
 
@@ -60,7 +63,7 @@
 #define KEY_RESET GLUT_KEY_F5
 
 #define NUMOFLINETRACER 3
-#define NUMOFRUNBA 3
+#define NUMOFRUNBA 1
 #define NUMOFFIGHTER 1
 class Machine;
 class opt_sensor;
@@ -72,4 +75,4 @@ class Game;
 //extern Machine m[3];
 
 
-int getRandum(int max,int min);
+int getRandom(int max,int min);

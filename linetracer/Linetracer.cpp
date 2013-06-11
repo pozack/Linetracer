@@ -82,7 +82,7 @@ void Linetracer::Drawsquare(int zx,int zy,float theta,int size){
 	glEnd();
 }
 
-void Linetracer::DrawTracer(class Linetracer *a)
+void Linetracer::DrawTracer()
 {
 	int zx,zy;
 	//
@@ -92,59 +92,59 @@ void Linetracer::DrawTracer(class Linetracer *a)
 
 	//PLATE
 	glColor3f(0.5,0.5,0.5);
-	Drawsquare(a->x,a->y,a->theta,a->width/2);
+	Drawsquare(x,y,theta,width/2);
 
 	//OPT_SENSOR_LEFT
 	glColor3f(BB);
-	Drawsquare(a->oleft.x,a->oleft.y,a->theta,5);
+	Drawsquare(oleft.x,oleft.y,theta,5);
 
 	//OPT_SENSOR_RIGHT
 	glColor3f(BB);
-	Drawsquare(a->oright.x,a->oright.y,a->theta,5);
+	Drawsquare(oright.x,oright.y,theta,5);
 
 	//TCH_SENSOR_LEFT
 	glColor3f(GG);
-	Drawsquare(a->tleft.x,a->tleft.y,a->theta,5);
+	Drawsquare(tleft.x,tleft.y,theta,5);
 
 	//TCH_SENSOR_RIGHT
 	glColor3f(GG);
-	Drawsquare(a->tright.x,a->tright.y,a->theta,5);
+	Drawsquare(tright.x,tright.y,theta,5);
 
 
 	//LED_LEFT
-	zx = a->x + a->height/4*cosf(a->theta+30*M_PI/180);
-	zy = a->y + a->height/4*sinf(a->theta+30*M_PI/180);
-	if(a->h / 10 )glColor3f(RR);
+	zx = x + height/4*cosf(theta+30*M_PI/180);
+	zy = y + height/4*sinf(theta+30*M_PI/180);
+	if(h / 10 )glColor3f(RR);
 	else glColor3f(0.5,0,0);
-	Drawsquare(zx,zy,a->theta,5);
+	Drawsquare(zx,zy,theta,5);
 
 	//LED_RIGHT
-	zx = a->x + a->height/4*cosf(a->theta-30*M_PI/180);
-	zy = a->y + a->height/4*sinf(a->theta-30*M_PI/180);
-	if(a->h % 10 )glColor3f(RR);
+	zx = x + height/4*cosf(theta-30*M_PI/180);
+	zy = y + height/4*sinf(theta-30*M_PI/180);
+	if(h % 10 )glColor3f(RR);
 	else glColor3f(0.5,0,0);
-	Drawsquare(zx,zy,a->theta,5);
+	Drawsquare(zx,zy,theta,5);
 
 	//TIRE_LEFT
-	zx = a->x + a->height/2*cosf(a->theta+90*M_PI/180);
-	zy = a->y + a->height/2*sinf(a->theta+90*M_PI/180);
+	zx = x + height/2*cosf(theta+90*M_PI/180);
+	zy = y + height/2*sinf(theta+90*M_PI/180);
 	glColor3f(BB);
-	Drawsquare(zx,zy,a->theta,5);
+	Drawsquare(zx,zy,theta,5);
 
 	//TIRE_RIGHT
-	zx = a->x + a->width/2*cosf(a->theta-90*M_PI/180);
-	zy = a->y + a->width/2*sinf(a->theta-90*M_PI/180);
+	zx = x + width/2*cosf(theta-90*M_PI/180);
+	zy = y + width/2*sinf(theta-90*M_PI/180);
 	glColor3f(BB);
-	Drawsquare(zx,zy,a->theta,5);
+	Drawsquare(zx,zy,theta,5);
 }
 
 
-Linetracer::Linetracer(){
+Linetracer::Linetracer(float x,float y,float theta){
 	width=50;
 	height=50;
-	x=600;
-	y=900;
-	theta=0*M_PI/180;
+	this->x=x;
+	this->y=y;
+	this->theta=theta*M_PI/180;
 	sw=false;
 }
 
