@@ -145,6 +145,6 @@ Linetracer::Linetracer(float x,float y,float theta){
 	this->x=x;
 	this->y=y;
 	this->theta=theta*M_PI/180;
-	sw=false;
+	sw=true;
 }
 

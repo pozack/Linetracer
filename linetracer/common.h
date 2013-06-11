@@ -63,7 +63,7 @@ using namespace std;
 #define KEY_RESET GLUT_KEY_F5
 
 #define NUMOFLINETRACER 3
-#define NUMOFRUNBA 1
+#define NUMOFRUNBA 3
 #define NUMOFFIGHTER 1
 class Machine;
 class opt_sensor;

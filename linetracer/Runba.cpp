@@ -1,7 +1,7 @@
 #include "common.h"
 #include "Runba.h"
 Runba::Runba(float x,float y,float theta){
-	time=300;
+	time=30;
 	turn=false;
 	d=false;
 	r=30;
@@ -10,7 +10,7 @@ Runba::Runba(float x,float y,float theta){
 	this->x=x;
 	this->y=y;
 	this->theta=theta*M_PI/180;
-	sw=false;
+	sw=true;
 }
 
 void Runba::DrawCircle(float x,float y,float r){

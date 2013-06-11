@@ -108,6 +108,6 @@ Machine::Machine(){
 	x=600;
 	y=900;
 	theta=0*M_PI/180;
-	sw=false;
+	sw=true;
 }
 
