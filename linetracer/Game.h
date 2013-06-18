@@ -1,6 +1,7 @@
-#include "common.h"
 
 #pragma once
+#include "common.h"
+
 
 class Game{
 private:

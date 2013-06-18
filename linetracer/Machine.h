@@ -1,7 +1,8 @@
+
+#pragma once
 #include "common.h"
 #include "Game.h"
 
-#pragma once
 //extern Game game;
 
 //•Ç‚É“–‚½‚Á‚½‚ç¶‰E‚ÉØ‚è‘Ö‚¦‚éB
