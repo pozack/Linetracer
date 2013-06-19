@@ -1,5 +1,5 @@
 #include "common.h"
-#include "Game.h"
+#include "Floor.h"
 #include "Machine.h"
 #include "Runba.h"
 #include "Linetracer.h"
@@ -19,7 +19,7 @@ void special_keyup(int key,int x,int y);
 void mouse(int x,int y);
 
 //global variable
-static Game game;
+static Floor floor1;
 static Fighter f;
 list<Linetracer> linetracerlist;
 list<Runba> runbalist;
@@ -69,7 +69,7 @@ void OpenGL_init()
 void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	game.DrawDots();
+	floor1.DrawDots();
 	for( list<Linetracer>::iterator it = linetracerlist.begin(); it!=linetracerlist.end(); it++){
 		it->DrawTracer();
 	}
@@ -83,7 +83,7 @@ void display(void)
 void timer(int dt)
 {
 	for( list<Linetracer>::iterator it = linetracerlist.begin(); it!=linetracerlist.end(); it++){
-		it->move(&game);
+		it->move(&floor1);
 	}
 
 	list<Runba>::iterator it,jt;
@@ -98,7 +98,7 @@ void timer(int dt)
 				it->y -= sinf(it->theta);
 			}
 		}
-		it->move(&game);
+		it->move(&floor1);
 	}
 	f.move();
 	glutPostRedisplay();
@@ -111,7 +111,7 @@ void init()
 	int i=0;
 	for(int x=0;x<WIDTH;x++){
 		for(int y=0;y<HEIGHT;y++){
-			game.setDot(x,y,BGCOLOR);
+			floor1.setDot(x,y,BGCOLOR);
 		}
 	}
 	i=0;
@@ -140,7 +140,7 @@ void init()
 
 void mouse(int x,int y)
 {
-	game.setDot(x,y,game.getPen());
+	floor1.setDot(x,y,floor1.getPen());
 }
 
 
@@ -176,12 +176,12 @@ void keydown(unsigned char key,int x,int y){
 			exit(0);
 			break;
 		case 127: /* delete */
-			if(game.getPen() == BGCOLOR ){
+			if(floor1.getPen() == BGCOLOR ){
 				glutSetCursor(GLUT_CURSOR_DESTROY);
-				game.setPen(COLOR);
+				floor1.setPen(COLOR);
 			}else{
 				glutSetCursor(GLUT_CURSOR_RIGHT_ARROW);
-				game.setPen(BGCOLOR);
+				floor1.setPen(BGCOLOR);
 			}
 			break;
 		case 13: /* ENTER */

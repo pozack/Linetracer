@@ -1,9 +1,9 @@
 
 #pragma once
 #include "common.h"
-#include "Game.h"
+#include "Floor.h"
 
-//extern Game game;
+//extern Floor floor;
 
 //壁に当たったら左右に切り替える。
 //マシン同士の衝突処理
@@ -24,7 +24,7 @@ public:
 	void stop();
 	void switching();
 	void handle(int value);
-	void move(Game *g);
+	void move(Floor *g);
 	//(中心位置x,中心位置y,角度,サイズ)
 	void Drawsquare(int zx,int zy,float theta,int size);
 	virtual void DrawTracer(class Machine *a);

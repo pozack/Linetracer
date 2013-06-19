@@ -64,7 +64,7 @@ void Runba::DrawRunba()
 
 
 
-void Runba::move(Game *g){
+void Runba::move(Floor *g){
 	if(sw){
 		//
 		if(time<=0){
@@ -93,7 +93,7 @@ void Runba::move(Game *g){
 }
 
 //Runba clean the line.
-void Runba::clean(Game *g){
+void Runba::clean(Floor *g){
 	//計算量を減らすために、ルンバの横のみ調べる。(GOAL)
 	float ay=-cos(theta);
 	float ax=sin(theta);

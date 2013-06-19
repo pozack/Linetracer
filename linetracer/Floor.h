@@ -3,7 +3,7 @@
 #include "common.h"
 
 
-class Game{
+class Floor{
 private:
 	bool dot[WIDTH][HEIGHT];
 	bool pen;
@@ -18,6 +18,6 @@ public:
 	void setPen(bool color){this->pen=color;}
 	//ƒhƒbƒgü‚ğ•`‰æ‚·‚é
 	void DrawDots();
-	Game();
-	//~Game();
+	Floor();
+	//~Floor();
 };

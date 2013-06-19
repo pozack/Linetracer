@@ -46,7 +46,7 @@ void Linetracer::handle(int value){
 	}
 }
 
-void Linetracer::move(Game *g){
+void Linetracer::move(Floor *g){
 	//
 	oleft.x = x + height/2.3*cosf(theta+30*M_PI/180);
 	oleft.y = y + height/2.3*sinf(theta+30*M_PI/180);

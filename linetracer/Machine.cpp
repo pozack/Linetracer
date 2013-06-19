@@ -46,7 +46,7 @@ void Machine::handle(int value){
 	}
 }
 
-void Machine::move(Game *g){
+void Machine::move(Floor *g){
 	if(sw){
 
 	}

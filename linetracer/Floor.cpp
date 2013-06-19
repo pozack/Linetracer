@@ -1,7 +1,7 @@
 #include "common.h"
-#include "Game.h"
+#include "Floor.h"
 
-void Game::setDot(int x,int y,bool color)
+void Floor::setDot(int x,int y,bool color)
 {
 	for(int i=x-LINEWIDTH;i<x+LINEWIDTH;i++){
 		for(int j=y-LINEWIDTH ;j<y+LINEWIDTH;j++){
@@ -13,7 +13,7 @@ void Game::setDot(int x,int y,bool color)
 }
 
 
-void Game::DrawDots()
+void Floor::DrawDots()
 {
 	if(COLOR == BLACK)glColor3i(BB);
 	else if(COLOR == WHITE)glColor3i(WW);
@@ -27,7 +27,7 @@ void Game::DrawDots()
 	glEnd();
 }
 
-Game::Game()
+Floor::Floor()
 {
 	for(int x=0;x<WIDTH;x++){
 		for(int y=0;y<HEIGHT;y++){

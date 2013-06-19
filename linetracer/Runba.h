@@ -1,7 +1,7 @@
 
 #pragma once
 #include "common.h"
-#include "Game.h"
+#include "Floor.h"
 #include "Machine.h"
 
 
@@ -18,8 +18,8 @@ public:
 	void DrawRunba();
 	void DrawCircle(float x,float y,float r);
 	void DrawFan(float x,float y,float r,float theta,float phi);
-	void move(Game *g);
-	void clean(Game *g);
+	void move(Floor *g);
+	void clean(Floor *g);
 	void handle(int value);
 	void setTurn(bool turn){this->turn=turn;}
 	void setTime(int time){this->time=time;}

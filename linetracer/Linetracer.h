@@ -1,6 +1,6 @@
 #pragma once
 #include "common.h"
-#include "Game.h"
+#include "Floor.h"
 #include "Machine.h"
 
 
@@ -12,13 +12,13 @@ public:
 	class opt_sensor{
 	public:
 		float x,y;
-		bool read(Game *g){return g->getDot((int)x,(int)y);}
+		bool read(Floor *g){return g->getDot((int)x,(int)y);}
 	};
 	class tch_sensor{
 	public:
 		float x,y;
 		//内側にある時は、0を返す。壁に当たったら1を返す。
-		bool read(Game *g){return !(( x>0 && x<WIDTH)&&( y>0 && y<HEIGHT));}
+		bool read(Floor *g){return !(( x>0 && x<WIDTH)&&( y>0 && y<HEIGHT));}
 	};
 	//内部クラスのインスタンス化
 	opt_sensor oleft;
@@ -37,7 +37,7 @@ public:
 	void stop();
 	void switching();
 	void handle(int value);
-	void move(Game *g);
+	void move(Floor *g);
 	//(中心位置x,中心位置y,角度,サイズ)
 	void Drawsquare(int zx,int zy,float theta,int size);
 	virtual void DrawTracer();

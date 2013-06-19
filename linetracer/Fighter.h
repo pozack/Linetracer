@@ -1,7 +1,7 @@
 
 #pragma once
 #include "common.h"
-#include "Game.h"
+#include "Floor.h"
 #include "Machine.h"
 
 class weapon{

@@ -69,7 +69,7 @@ using namespace std;
 class Machine;
 class opt_sensor;
 class tch_sensor;
-class Game;
+class Floor;
 
 
 //extern Game game;
