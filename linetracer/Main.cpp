@@ -129,8 +129,11 @@ void init()
 	runbalist.insert(runbalist.end(),Runba(100,100,30));
 	i=0;
 	for(list<Runba>::iterator it = runbalist.begin(); i<NUMOFRUNBA ; it++){
-		it->x=WIDTH/2+WIDTH/2.3*cos(2*i*M_PI/NUMOFRUNBA);
-		it->y=HEIGHT/2+HEIGHT/2.3*sin(2*i*M_PI/NUMOFRUNBA);
+		//it->x=WIDTH/2+WIDTH/2.3*cos(2*i*M_PI/NUMOFRUNBA);
+		//it->y=HEIGHT/2+HEIGHT/2.3*sin(2*i*M_PI/NUMOFRUNBA);
+		it->x=i%10*WIDTH/11+70;
+		it->y=i/10*HEIGHT/11+70;
+
 		it->theta=2*i*M_PI/NUMOFRUNBA;
 		runbalist.insert(runbalist.end(),*it);
 		i++;

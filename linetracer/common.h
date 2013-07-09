@@ -4,7 +4,7 @@
 //                                                               //
 ///////////////////////////////////////////////////////////////////
 
-#pragma once
+//#pragma once
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -63,8 +63,8 @@ using namespace std;
 #define KEY_CHANGE_STAGE GLUT_KEY_F4
 #define KEY_RESET GLUT_KEY_F5
 
-#define NUMOFLINETRACER 3
-#define NUMOFRUNBA 3
+#define NUMOFLINETRACER 1
+#define NUMOFRUNBA 100
 #define NUMOFFIGHTER 1
 class Machine;
 class opt_sensor;
