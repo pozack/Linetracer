@@ -14,6 +14,7 @@ class Machine
 public:
 	//“à•”ƒNƒ‰ƒX‚Ì’è‹`
 	float x,y,theta;
+	float vx,vy;
 	bool sw;
 	int width;
 	int height;

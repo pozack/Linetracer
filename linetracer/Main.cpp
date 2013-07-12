@@ -87,15 +87,15 @@ void timer(int dt)
 	}
 
 	list<Runba>::iterator it,jt;
-	for( it = runbalist.begin(); it!=runbalist.end(); it++){
-		for(  jt = runbalist.begin(); jt!=runbalist.end(); jt++){
+	for( it = runbalist.begin(); it!=runbalist.end(); ++it){
+		for(  jt = runbalist.begin(); jt!=runbalist.end(); ++jt){
 			if(it==jt)continue;
-			if( (it->x-jt->x)*(it->x-jt->x)+(it->y-jt->y)*(it->y-jt->y)< 4*it->r*it->r){
+			if( (it->x+it->vx-jt->x)*(it->x+it->vx-jt->x)+(it->y+it->vy-jt->y)*(it->y+it->vy-jt->y)< 4*it->r*it->r){
 				it->setTurn(true);
 				it->setTime(getRandom(50,60));
 				//Õ“Ë‚É‚æ‚é”½“®B”Ú‹¯‹Z‚¶‚á‚È‚¢B
-				it->x -= cosf(it->theta);
-				it->y -= sinf(it->theta);
+				it->x -= it->vx;
+				it->y -= it->vy;
 			}
 		}
 		it->move(&floor1);
@@ -117,7 +117,7 @@ void init()
 	i=0;
 	linetracerlist.insert(linetracerlist.end(),Linetracer(100,100,30));
 	for( list<Linetracer>::iterator it = linetracerlist.begin(); i<NUMOFLINETRACER; i++,it++){
-		it->x=WIDTH/2+WIDTH/3*cos(2*i*M_PI/NUMOFLINETRACER);
+		it->x= WIDTH/2+ WIDTH/3*cos(2*i*M_PI/NUMOFLINETRACER);
 		it->y=HEIGHT/2+HEIGHT/3*sin(2*i*M_PI/NUMOFLINETRACER);
 		it->theta=(360/NUMOFLINETRACER*i+180)*M_PI/180;
 		it->tleft.x = it->x + it->height/2*cosf(it->theta+45*M_PI/180);
@@ -204,7 +204,7 @@ void keydown(unsigned char key,int x,int y){
 		default:
 			break;
 	}
-	glutPostRedisplay();
+	//glutPostRedisplay();
 }
 
 void keyup(unsigned char key,int x,int y){	

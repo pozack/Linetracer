@@ -41,7 +41,6 @@ public:
 class Fighter : public Machine
 {
 public:
-	float vx,vy;
 	float ax,ay;
 	float f,torque;
 	float vtheta;

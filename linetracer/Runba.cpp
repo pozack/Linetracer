@@ -10,6 +10,8 @@ Runba::Runba(float x,float y,float theta){
 	this->x=x;
 	this->y=y;
 	this->theta=theta*M_PI/180;
+	vx=cosf(theta);
+	vy=sinf(theta);
 	sw=true;
 }
 
@@ -44,7 +46,6 @@ void Runba::DrawRunba()
 	else if( COLOR == WHITE )glColor3f(WW);
 	//float tmp,squar=45*M_PI/180;
 
-
 	//PLATE
 	glColor3f(0.1,0.1,0.1);
 	DrawCircle(x,y,r);
@@ -66,27 +67,30 @@ void Runba::DrawRunba()
 
 void Runba::move(Floor *g){
 	if(sw){
-		//
 		if(time<=0){
 			turn=!turn;
 			if(turn)time=getRandom(1,100);
 			else time=getRandom(100,300);
 			d=(time%2==0);
 		}
-		if( (x<r)||(x>WIDTH-r)||(y<r)||(y>HEIGHT-r) ){
+		if( (x+vx<r)||(x+vx>WIDTH-r)||(y+vy<r)||(y+vy>HEIGHT-r) ){
 			turn=true;
 			time=getRandom(50,60);
 			d=(time%2==0);
-			//衝突による反動。卑怯技じゃない。
-			x -= cosf(theta);
-			y -= sinf(theta);
+			//衝突による反動。
+			x -= vx;
+			y -= vy;
+		}
+		if( (x<0)||(x>WIDTH)||(y<0)||(y>HEIGHT) ){
+			x = WIDTH/2; 
+			y = HEIGHT/2;
 		}
 		if(turn){
 			if(d)handle(1);//turn left
 			else handle(10);//turn right
 		}else{
 			handle(0);//fowarding
-		}		
+		}
 		clean(g);
 		time--;
 	}
@@ -94,27 +98,25 @@ void Runba::move(Floor *g){
 
 //Runba clean the line.
 void Runba::clean(Floor *g){
-	//計算量を減らすために、ルンバの横のみ調べる。(GOAL)
-	float ay=-cos(theta);
-	float ax=sin(theta);
 	for(float i=-r/2;i<r/2;i+=3){
-		g->setDot(x+ax*i,y+ay*i,BGCOLOR);
+		g->setDot(x+vy*i,y-vx*i,BGCOLOR);
 	}
-	/*
-	for(int dx=x-r;dx<x+r;dx++){
-		for(int dy=y-r;dy<y+r;dy++){
-			if((dx-x)*(dx-x)+(dy-y)*(dy-y)<r*r)g->setDot(dx,dy,BGCOLOR);
-		}
-	}
-	*/
 }
 
 
 void Runba::turn_left(){
-	theta += 3*M_PI/180;		
+	theta += 3*M_PI/180;
+	vx=cosf(theta);
+	vy=sinf(theta);
 }
 void Runba::turn_right(){
 	theta -= 3*M_PI/180;
+	vx=cosf(theta);
+	vy=sinf(theta);
+}
+void Runba::go_straight_on(){
+	x+=vx;
+	y+=vy;
 }
 
 void Runba::handle(int value){

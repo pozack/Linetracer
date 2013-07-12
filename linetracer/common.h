@@ -30,8 +30,8 @@ using namespace std;
 
 #define BLACK false
 #define WHITE true
-#define WIDTH  1000
-#define HEIGHT 800
+#define WIDTH  600
+#define HEIGHT 400
 
 #define BGCOLOR WHITE
 #define COLOR BLACK 
@@ -64,7 +64,7 @@ using namespace std;
 #define KEY_RESET GLUT_KEY_F5
 
 #define NUMOFLINETRACER 1
-#define NUMOFRUNBA 100
+#define NUMOFRUNBA 10
 #define NUMOFFIGHTER 1
 class Machine;
 class opt_sensor;

@@ -13,6 +13,7 @@ private:
 	bool turn,d;
 public:
 	float r;
+	void go_straight_on();
 	void turn_left();
 	void turn_right();
 	void DrawRunba();
